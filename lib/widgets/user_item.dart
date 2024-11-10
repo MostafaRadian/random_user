@@ -25,7 +25,8 @@ class UserItem extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Text(email),
             ],
