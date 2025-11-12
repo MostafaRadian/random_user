@@ -1,37 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/models/user_model.dart';
+import 'package:untitled1/screens/details_screen.dart';
 
 class UserItem extends StatelessWidget {
-  String name, email, image;
-
-  UserItem({
-    required this.name,
-    required this.email,
-    required this.image,
-  });
+  final UserModel user;
+  const UserItem({required this.user, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(image),
-          ),
-          const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-              Text(email),
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DetailsScreen(user: user)),
+      ),
+      child: Card(
+        child: ListTile(
+          leading: CircleAvatar(backgroundImage: NetworkImage(user.image)),
+          title: Text(user.name),
+          subtitle: Text(user.email),
+        ),
       ),
     );
   }

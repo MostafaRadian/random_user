@@ -1,47 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled1/providers/user_provider.dart';
+import 'package:untitled1/widgets/user_item.dart';
 
-import '../Widgets/user_item.dart';
-import '../providers/user_provider.dart';
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class Homepage extends StatelessWidget {
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    UserProvider providerObject = UserProvider.getObject(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Random Users"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(),
       body: Consumer<UserProvider>(
-        builder: (context, userProvider, child) {
-          final result = userProvider.userData?.result;
-
-          if (result == null) {
-            providerObject.fetchUsers();
+        builder: (context, value, child) {
+          final userList = value.model?.users;
+          if (userList == null) {
+            value.getUsers();
             return const Center(child: CircularProgressIndicator());
           } else {
-            return ListView.separated(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                final user = result[index];
-
-                return UserItem(
-                  name: user["name"],
-                  email: user["email"],
-                  image: user["image"],
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
+            return ListView.builder(
+              itemCount: userList.length,
+              itemBuilder: (context, index) => UserItem(user: userList[index]),
             );
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          providerObject.fetchUsers();
+          context.read<UserProvider>().getUsers();
         },
         child: const Icon(Icons.refresh),
       ),

@@ -1,23 +1,35 @@
 class UserModel {
-  List<dynamic> result;
+  String name;
+  String email;
+  String image;
+  String city;
+  int age;
 
-  UserModel({required this.result});
+  UserModel({
+    required this.name,
+    required this.image,
+    required this.email,
+    required this.city,
+    required this.age,
+  });
+}
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> fullData = [];
-    for (var i = 0; i < 5; i++) {
-      fullData.add(json["results"][i]);
-    }
-    fullData = fullData.map(
-      (user) {
-        return {
-          "name": user["name"]["first"] + " " + user["name"]["last"],
-          "email": user["email"],
-          "image": user["picture"]["thumbnail"],
-        };
-      },
-    ).toList();
+class Users {
+  List<UserModel> users;
 
-    return UserModel(result: fullData);
+  Users({required this.users});
+
+  factory Users.fromJson({required Map<String, dynamic> json}) {
+    List<UserModel> tempList = json["results"].map<UserModel>((user) {
+      return UserModel(
+        name: "${user["name"]["first"]} ${user["name"]["last"]}",
+        image: user["picture"]["large"],
+        email: user["email"],
+        city: user["location"]["city"],
+        age: user["dob"]["age"],
+      );
+    }).toList();
+
+    return Users(users: tempList);
   }
 }

@@ -1,17 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-
-import '../models/user_model.dart';
-import '../services/user_service.dart';
+import 'package:flutter/material.dart';
+import 'package:untitled1/models/user_model.dart';
+import 'package:untitled1/services/user_services.dart';
 
 class UserProvider extends ChangeNotifier {
-  UserModel? userData;
+  Users? model;
 
-  static UserProvider getObject(context) =>
-      Provider.of<UserProvider>(context, listen: false);
-
-  Future<void> fetchUsers() async {
-    userData = await UserService.fetchRandomUsers();
+  Future<void> getUsers() async {
+    model = await UserServices.getData();
     notifyListeners();
   }
 }
