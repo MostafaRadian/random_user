@@ -9,7 +9,11 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Users', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+        backgroundColor: Colors.purple,
+      ),
       body: Consumer<UserProvider>(
         builder: (context, value, child) {
           final userList = value.model?.users;

@@ -14,7 +14,7 @@ class DetailsScreen extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.purple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
